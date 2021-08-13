@@ -1,0 +1,44 @@
+{
+  "project_info": {
+    "project_number": "391665152004",
+    "firebase_url": "https://zolzac-60337-default-rtdb.firebaseio.com",
+    "project_id": "zolzac-60337",
+    "storage_bucket": "zolzac-60337.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:391665152004:android:1a48faf14364d082544551",
+        "android_client_info": {
+          "package_name": "host.exp.Exponent"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "391665152004-5ih8inrs23aa25q6ielo37o0h3aj3kn2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "host.exp.Exponent",
+            "certificate_hash": "18c27aa8bd11cabc8ad5d4b9ff77a79ceae16ef8"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChgaRSQmogKU-TYC6imND1A2N7_d75AdA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "391665152004-fm4q94mjruqdruqqngh8lcbohhp4cj1p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
