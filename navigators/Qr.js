@@ -2,7 +2,7 @@ import React, { createContext, useState } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import QrScan from '../screen/QrFolder/QrScan';
 import QrScreen from '../screen/QrFolder/QrScreen';
-import { qrContext } from './qrContext';
+import { qrContext } from './StackContext';
 
 
 

@@ -4,7 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import 'react-native-gesture-handler';
 import HomeScreen from '../screen/HomeScreen';
-import OrderScreen from '../screen/OrderScreen';
+import Order from './Order';
 import Qr from './Qr'
 import SettingsScreen from './SettingsScreen';
 import StoreScreen from './Store';
@@ -56,7 +56,7 @@ export default function Main() {
    }}
  >
    <Tab.Screen name="Home" component={HomeScreen} />
-   <Tab.Screen name="Order" component={OrderScreen} />
+   <Tab.Screen name="Order" component={Order} />
    <Tab.Screen name="Qr" component={Qr}/>
    <Tab.Screen name="Store" component={StoreScreen} />
    <Tab.Screen name="Settings" component={SettingsScreen} />

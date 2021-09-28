@@ -6,7 +6,7 @@ import firebaseInit from '../../src/firebaseInit';
 import {addPoint} from '../../src/firebaseCall';
 import { UserInfoContext } from '../../src/UserInfoContext';
 import { useToast } from "react-native-toast-notifications";
-import {qrContext} from '../../navigators/qrContext';
+import {qrContext} from '../../navigators/StackContext';
 
 firebaseInit()
 
