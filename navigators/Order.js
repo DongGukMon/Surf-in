@@ -10,7 +10,10 @@ const Stack = createStackNavigator();
 
 function Order() {
 
-  const [orderData,setOrderData] = useState([])
+  const [orderData,setOrderData] = useState({
+    fullData:[],
+    selectData:[]
+  })
 
   return (
     <orderContext.Provider value={{orderData,setOrderData}}>

@@ -1,11 +1,11 @@
 import React, {useState, useEffect, useContext} from 'react';
-import { ActivityIndicator, Button, Text, View, ScrollView, TouchableOpacity,SafeAreaView } from 'react-native';
-import {Ionicons} from '@expo/vector-icons';
+import { ActivityIndicator, StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
+
 import firebaseInit from '../../src/firebaseInit';
 import firebase from 'firebase';
-import * as Notifications from 'expo-notifications';
-import {UserInfoContext} from '../../src/UserInfoContext';
+
 import {orderContext} from '../../navigators/StackContext';
+
 
 firebaseInit()
 
@@ -14,7 +14,6 @@ function OrderList({navigation}) {
 
   const {orderData, setOrderData} = useContext(orderContext);
   const {fullData} = orderData;
-  const listBox=[];
 
 
   useEffect(() => {
@@ -29,24 +28,74 @@ function OrderList({navigation}) {
   },[])
 
   return (
-    <View style={{flex:1 }}>
-      <SafeAreaView>
-        <ScrollView style={{padding: 30}}>
-          {fullData ? fullData.map((item, index)=>{
-            
-            return (
-            <TouchableOpacity style={{backgroundColor: 'white', height: 150, borderRadius: 30, borderColor: 'black', borderWidth:3,justifyContent: 'center', alignItems: 'center'  }} 
-                onPress={() => {
-                  setOrderData({...orderData, selectData: item})
-                  navigation.navigate("OrderScreen")}} key={index}>
-              <Text >{item["title"]}</Text>
-            </TouchableOpacity>
-            )
-          }) : <ActivityIndicator/>}
+    <View style={{flex:1, backgroundColor:'white'}}>
+
+        <ScrollView style={{flex:1}}>
+
+          <View style={{flex:1, padding:30}}>
+
+            <View style={{flex:1}}>
+              
+            </View> 
+
+            <View style={{flex:1}}>
+              {fullData ? fullData.map((item, index)=>{
+
+                return (
+                <TouchableOpacity style={styles.box} 
+    
+                    onPress={() => {
+                      setOrderData({...orderData, selectData: item})
+                      navigation.navigate("OrderScreen")}} key={index}>
+
+                  <Text style={{color:'white'}}>{item["title"]}</Text>
+                  <Text style={{color:'white'}}>{item["reward"]}</Text>
+                 
+                  <Text style={{color:'white'}}>{dateFormate(item['timeLimit'])}</Text>
+                </TouchableOpacity>
+                )
+              }) : <ActivityIndicator/>}
+            </View> 
+
+          </View>
+
         </ScrollView>
-      </SafeAreaView>
+
     </View>
   );
 }
 
+const styles = StyleSheet.create({
+  box: {
+    justifyContent: 'center', 
+    alignItems: 'center',
+    height: 150, 
+    borderRadius: 30, 
+    marginBottom:15, 
+    paddingTop: 5,
+    paddingBottom: 5,
+    backgroundColor: '#4A59EC',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+}
+})
+
 export default OrderList;
+
+export function dateFormate(untill) {
+  var date = new Date(untill)
+  var mm = date.getMonth() + 1; // getMonth() is zero-based
+  var dd = date.getDate();
+
+  var fullDate= [date.getFullYear(),
+              (mm>9 ? '' : '0') + mm,
+              (dd>9 ? '' : '0') + dd
+            ].join(' / ');
+  return fullDate
+}

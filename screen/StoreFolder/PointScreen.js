@@ -32,7 +32,7 @@ function PointScreen() {
   },[])
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center',backgroundColor:'white' }}>
       <Text>이렇게 바꾸면?</Text>
     </View>
   );

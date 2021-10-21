@@ -46,10 +46,11 @@ export default function QrScan({navigation}) {
         case "Friend":
           return actionFriends(value);
         case "Trade":
-          // return actionTrade(friendUid,amount,action);
           navigation.goBack()
           return setModalHandle({...modalHandle,modalVisibleTrade:true,friendUid:value})  
-          default:
+        case "Order":
+          return actionOrder(value);
+        default:
           alert("올바른 Qr코드를 입력해주세요.")
           setGotError(true);
       }
@@ -59,6 +60,107 @@ export default function QrScan({navigation}) {
     }
   }
     
+  const actionOrder = (qrData) => {
+
+    const [orderKey, orderUuid]=qrData.split("/");
+
+    firebase.database().ref('master/'+orderKey).once('value',(snapshot)=> {
+    
+      //오더의 key가 올바르면 실행
+      if(snapshot.val()){
+        const orderData = snapshot.val()
+        const qrList = []
+        Object.values(orderData.qrId).map((item)=>{
+          qrList.push(item['uuid'])
+        })
+        //QR의 uuid가 올바르면 실행
+        if(qrList.includes(orderUuid)){
+
+           // 유효기간이 지나지 않았는지
+          if (orderData.timeLimit < new Date().getTime()){
+            alert("이미 종료된 오더입니다.")
+            navigation.goBack()
+            return
+          }
+
+          //동일한 uuid : uid 로 완료한 기록이 있는지
+          if(orderData.complite){
+            let breakPoint = false
+            if(Object.values(orderData.complite).length >= orderData.peopleNumber){
+              alert("인원 마감되었습니다.")
+              navigation.goBack()
+              return
+            } else if(orderData.qrMulti && orderData.uidMulti){
+              Object.values(orderData.complite).map((item)=>{
+                if(JSON.stringify(item) == JSON.stringify({[orderUuid]:uid})){
+                    alert("이미 참여하셨습니다. N:N")
+                    breakPoint = true
+                    navigation.goBack()
+                }
+              })
+            } else if(orderData.qrMulti && !orderData.uidMulti){
+              Object.values(orderData.complite).map((item)=>{
+                if(Object.values(item)[0] == uid){
+                    alert("이미 참여하셨습니다.N:1")
+                    breakPoint = true
+                    navigation.goBack()
+                }
+              })
+            } else if(!orderData.qrMulti && orderData.uidMulti){
+              Object.values(orderData.complite).map((item)=>{
+                if(Object.keys(item)[0] == orderUuid){
+                    alert("이미 참여하셨습니다.1:N")
+                    breakPoint = true
+                    navigation.goBack()
+                }
+              })
+            } else if(!orderData.qrMulti && !orderData.uidMulti){
+              Object.values(orderData.complite).map((item)=>{
+                if((Object.keys(item)[0] == orderUuid) || (Object.values(item)[0] == uid)){
+                    alert("이미 참여하셨습니다.1:1")
+                    breakPoint = true
+                    navigation.goBack()
+                }
+              })
+            }
+            if (breakPoint){
+              return
+            }
+          }
+          
+          //이상 없었을 때 정상 처리
+
+          //포인트 주기
+          firebase.database().ref('point/' + uid).once('value', (snapshot) => {
+            const myPoint = snapshot.val().totalPoint;
+            addPoint(uid,myPoint,orderData.reward,"Order")
+          })
+
+          //완료자 명단
+          firebase
+            .database()
+            .ref('master/'+ orderKey +'/complite')
+            .push(
+              {[orderUuid]:uid}
+            );
+
+          navigation.goBack()
+          throwToast("적립 완료!")
+        }
+        //QR의 uuid가 올바르지 않을때
+        else{
+          alert("올바르지 않은 QR ID입니다")
+          navigation.goBack()
+          }
+      } 
+      //오더 Key가 올바르지 않을때
+      else{
+        alert("올바르지 않은 오더 입니다")
+        navigation.goBack()
+        }
+    })
+  }
+
   const actionFriends = (friendUid) => {
     firebase.database().ref('friends/' + uid).once('value', (snapshot) => {
       const friendsList = snapshot.val() ? Object.values(snapshot.val()) : [];
@@ -94,25 +196,6 @@ export default function QrScan({navigation}) {
        }
      })
   }
-
-  // const actionTrade = (friendUid, amount, action) => {
-    
-  //   firebase.database().ref('point/' + friendUid).once('value', (snapshot) => {
-  //     const friendPoint = snapshot.val().totalPoint;
-  //     addPoint(friendUid,friendPoint,-amount,action)
-  //   })
-  //   firebase.database().ref('point/' + uid).once('value', (snapshot) => {
-  //     const myPoint = snapshot.val().totalPoint;
-  //     addPoint(uid,myPoint,amount,action)
-  //   })
-  //   navigation.goBack()
-  //   toast.show("거래 완료!",{
-  //     type: "success",
-  //     duration: 4000,
-  //     offset: 30,
-  //     animationType: "slide-in",
-  //   });
-  // }
 
 
   if (hasPermission === null) {

@@ -6,7 +6,7 @@ import {StyleSheet, Text, View } from "react-native";
 function SettingsScreen({ navigation }) {
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center',backgroundColor:'white' }}>
         <Text style={styles.list} onPress={()=>navigation.navigate("Acount")}>계정</Text>
         <Text style={styles.list} onPress={()=>navigation.navigate("Alam")}>알림설정</Text>
         <Text style={styles.list} onPress={()=>navigation.navigate("Rules")}>행동수칙</Text>

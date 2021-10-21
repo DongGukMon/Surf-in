@@ -32,27 +32,36 @@ export default function Main() {
    tabBarIcon: ({ focused, color, size }) => {
      let iconName;
      if (route.name === 'Home') {
-       iconName = focused
-         ? 'home'
-         : 'home-outline';
+       return(
+        <Ionicons name={focused ? 'home' : 'home-outline'} size={24} color={focused ? '#333FC8' : "gray"} />
+       )
      } else if (route.name === 'Order') {
-       iconName = focused ? 'mail-open' : 'mail-outline';
+      return(
+      <Ionicons name={focused ? 'mail-open' : 'mail-outline'} size={24} color={focused ? '#333FC8' : "gray"} />
+      )
+
      } else if (route.name === 'Qr') {
-       iconName = focused ? 'qr-code' : 'qr-code-outline';
+      return(
+      <Ionicons name={focused ? 'qr-code' : 'qr-code-outline'} size={24} color={focused ? '#333FC8' : "gray"} />
+      )
      } else if (route.name === 'Store') {
-       iconName = focused ? 'shirt' : 'shirt-outline';
+      return(
+      <Ionicons name={focused ? 'shirt' : 'shirt-outline'} size={24} color={focused ? '#333FC8' : "gray"} />
+      )
      } else if (route.name === 'Settings') {
-       iconName = focused ? 'settings' : 'settings-outline';
+      return(
+      <Ionicons name={focused ? 'settings' : 'settings-outline'} size={24} color={focused ? '#333FC8' : "gray"} />
+      )
      }
 
-     // You can return any component that you like here!
-     return <Ionicons name={iconName} size={24} color="black" />;
    },
  })}
 
    tabBarOptions={{
-     activeTintColor: 'tomato',
+     activeTintColor: '#333FC8',
      inactiveTintColor: 'gray',
+     activeBackgroundColor:'white',
+     inactiveBackgroundColor:'white'
    }}
  >
    <Tab.Screen name="Home" component={HomeScreen} />

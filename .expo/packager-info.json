@@ -1,5 +1,10 @@
 {
   "devToolsPort": 19002,
-  "expoServerPort": null,
-  "packagerPort": 19000
+  "expoServerPort": 19000,
+  "packagerPort": 19000,
+  "packagerPid": null,
+  "expoServerNgrokUrl": "https://8b-cij.donggukmon.surfin.exp.direct",
+  "packagerNgrokUrl": "https://packager.8b-cij.donggukmon.surfin.exp.direct",
+  "ngrokPid": 14508,
+  "webpackServerPort": null
 }

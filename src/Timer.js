@@ -1,6 +1,7 @@
 
 function Timer(nowDate) {
-    var openDate = new Date('2022/02/22 00:00:00')
+    var openDate = new Date('2021/11/29 00:00:00')
+    // var openDate = goal
     var nowDate = Object.values(nowDate)[0]
    
     var diffTime = openDate.getTime() - nowDate.getTime();

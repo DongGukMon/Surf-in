@@ -35,14 +35,14 @@ function StoreScreen({navigation}) {
     },[])
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center',backgroundColor:'white' }}>
       {point ? (<Text>point: {point}</Text>) : <ActivityIndicator/>}
       <Button
           title="포인트내역"
           onPress={() => navigation.navigate("PointScreen")}
         />
       <Text>Comming Soon</Text>
-      <Text><Timer nowDate ={nowTime}/></Text>
+      <Text><Timer nowDate ={nowTime} /></Text>
     </View>
   );
 }

@@ -56,12 +56,13 @@ export async function pushNearFriends(nearFirends) {
             toPush.push(snapshot.val()[current["uid"]]["expoToken"])
         })
 
+        console.log(toPush)
         await fetch('https://exp.host/--/api/v2/push/send', {
             method: 'POST',
             headers: {
               Accept: 'application/json',
               'Content-Type': 'application/json',
-              Authorization: key=`AAAAWzEP8AQ:APA91bFkAehXNlIstOSFEUE44ObvNmp0Ki5PWp4Fik2Mtf181rnsURDCdFCO1JSvMNfMbDOSvabCow1MkwRmJ0kZZETRBSZGTrwwEps_EHW4uvHaLLK2SITFi11U7cvuf86td2IEQeRV`,
+            //   Authorization: key=`AAAAWzEP8AQ:APA91bFkAehXNlIstOSFEUE44ObvNmp0Ki5PWp4Fik2Mtf181rnsURDCdFCO1JSvMNfMbDOSvabCow1MkwRmJ0kZZETRBSZGTrwwEps_EHW4uvHaLLK2SITFi11U7cvuf86td2IEQeRV`,
             },
             body: JSON.stringify({
               to: toPush,
@@ -72,4 +73,5 @@ export async function pushNearFriends(nearFirends) {
             },
         )
     })
+
 }

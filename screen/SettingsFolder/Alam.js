@@ -5,7 +5,7 @@ import {StyleSheet, Text, View } from "react-native";
 function Alam({ navigation }) {
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center',backgroundColor:'white' }}>
         <Text style={styles.list} onPress={()=>{alert("좋아요 구독 알림설정까지.")}}>알람설정입니다.</Text>
     </View>
   );

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Button, Text, View, Modal, ActivityIndicator } from 'react-native';
+import { Button, Text, View, Modal, ActivityIndicator, TouchableOpacity } from 'react-native';
 import LottieView from 'lottie-react-native';
 import * as Location from 'expo-location';
 import firebase from 'firebase';
@@ -98,7 +98,7 @@ function HomeScreen() {
   },[]);
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <View style={{ backgroundColor:'white', flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       
       <Modal
         transparent={true}
@@ -118,8 +118,12 @@ function HomeScreen() {
         </View>
       </Modal>
 
-      <LottieView source={require('../assets/animation/66818-holographic-radar.json')} autoPlay loop />
-      <Button title="Location" onPress={()=>{alertLocation();}}/>      
+      <TouchableOpacity style={{width:150, height: 150, justifyContent:'center', alignItems:"center", borderRadius: 300}} onPress={()=>{alertLocation();}}>
+  
+      
+      <LottieView source={require('../assets/animation/66818-holographic-radar.json')} autoPlay loop style={{width:500}} />
+      {/* <Button title="Location" onPress={()=>{alertLocation();}}/>    */}
+      </TouchableOpacity> 
     </View>
   );
 }

@@ -13,7 +13,7 @@ LogBox.ignoreAllLogs();
 export default function App() {
 
   const [isLogin, setIsLogin] = useState("Yet");
-  const [userInfo, setUserInfo] = useState({uid: "",email:"",name: "",point: "",order: "",reward: ""});
+  const [userInfo, setUserInfo] = useState({uid: "",email:"",name: "",point: ""});
 
   const checkIfLoggedIn = () => {
     firebase.auth().onAuthStateChanged(
@@ -35,7 +35,7 @@ export default function App() {
   return (
     isLogin == "Yet" ?
       (<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}><ActivityIndicator/></View>) :
-    (isLogin ?(
+    // (isLogin ?(
       <UserInfoContext.Provider value={{userInfo,setUserInfo}}>
         <ToastProvider>
         <NavigationContainer>
@@ -43,10 +43,10 @@ export default function App() {
         </NavigationContainer>
         </ToastProvider>
       </UserInfoContext.Provider>
-    ) : 
-      <UserInfoContext.Provider value={{userInfo,setUserInfo}}>
-        <Signin/>
-      </UserInfoContext.Provider>
-    )
+    // ) : 
+    //   <UserInfoContext.Provider value={{userInfo,setUserInfo}}>
+    //     <Signin/>
+    //   </UserInfoContext.Provider>
+    // )
   )
 }
