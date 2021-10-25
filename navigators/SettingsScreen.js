@@ -11,9 +11,9 @@ const Stack = createStackNavigator();
 function SettingsScreen() {
   return (
     <Stack.Navigator>
-        <Stack.Screen name="SettingRoot" component={SettingsRoot} options={{headerShown: false}} />
+        <Stack.Screen name="SettingRoot" component={SettingsRoot} options={{headerShown: true}} />
         <Stack.Screen name="Alam" component={Alam}/>
-        <Stack.Screen name="PersonalInfo" component={PersonalInfo}/>
+        <Stack.Screen name="PersonalInfo" component={PersonalInfo} options={{title: '',headerBackTitleVisible:false}}/>
         <Stack.Screen name="Rules" component={Rules}/>
         <Stack.Screen name="Acount" component={Acount}/>
     </Stack.Navigator>

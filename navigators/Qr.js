@@ -11,12 +11,11 @@ const Stack = createStackNavigator();
 function Qr() {
 
   const [modalHandle,setModalHandle] = useState({
-    modalVisibleQr: false,
     modalVisibleTrade:false,
     text:"",
     isTrade:false,
     friendUid:"",
-    porintChangeListen:false
+    porintChangeListen:true
   })
 
   return (

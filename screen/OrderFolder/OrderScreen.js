@@ -3,6 +3,7 @@ import { ActivityIndicator, Button, Text, View, ScrollView, SafeAreaView, Dimens
 import {orderContext} from '../../navigators/StackContext';
 import {formateDate} from './OrderList';
 
+
 function OrderScreen() {
 
   const {orderData} = useContext(orderContext);
@@ -30,12 +31,15 @@ function OrderScreen() {
     <SafeAreaView style={{ flex: 1, backgroundColor: 'white'}}>
       <ScrollView style={{ flex: 1}}>
         {orderData.selectData ? (
-          <View style={{ marginTop:50,flex: 1}}>
+          <View style={{flex: 1}}>
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor:'green' }}>
               <Text>title:{title}</Text>
               <Text>reward:{reward}</Text>
               <Text>등록일:{regiDate}</Text>
               <Text>마감일:{new Date(timeLimit).toString()}</Text>
+            </View>
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor:'tomato' }}>
+
             </View>
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'yellow'}}>
               <Text>본문{body}</Text>
