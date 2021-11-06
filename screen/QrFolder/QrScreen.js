@@ -8,6 +8,8 @@ import { useToast } from "react-native-toast-notifications";
 import {qrContext} from '../../navigators/StackContext';
 import {addPoint} from '../../src/firebaseCall';
 import SwipeUpDown from 'react-native-swipe-up-down';
+import FriendCarousel from "../../src/FriendCarousel"
+
 
 firebaseInit();
 
@@ -21,6 +23,7 @@ function QrScreen({ navigation }) {
   const {uid} = userInfo
 
   const [swipeUpDownRef, setSwipeUpDownRef] = useState()
+  const [carouselData, setCarouselData] = useState([])
 
   const toast = useToast();
 
@@ -51,8 +54,28 @@ function QrScreen({ navigation }) {
     throwToast("거래 완료!");
   }
 
+  console.log(carouselData)
 
   useEffect(() =>{
+    firebase.database().ref('friends/' + uid).once('value', (snapshot)=>{
+      Object.values(snapshot.val()).map((item,index)=>{
+        firebase.database().ref('location/'+item).once('value',(location)=>{
+          firebase.database().ref('users/'+item).once('value',(users)=>{
+            const tempArr = carouselData.slice()
+            console.log(tempArr)
+            if(Object.values(snapshot.val()).length >tempArr){
+              tempArr.push({
+              ...location.val(),
+              ...users.val(),
+              "num":index
+            })
+            setCarouselData(tempArr);
+          }
+          })
+        })
+      })
+    })
+
 
     firebase.database().ref('point/' + uid + '/pointLog')
     .on('value', (snapshot) => {
@@ -91,11 +114,18 @@ function QrScreen({ navigation }) {
   };
   },[tempData,porintChangeListen])
 
+
+
   return (
     <SafeAreaView style={{flex: 1, backgroundColor:'midnightblue'}}>
 
-        <View style={styles.container,{flex:2, backgroundColor:'midnightblue',alignItems:'center', justifyContent:'center'}}>
-          <Text style={{color:'white'}}>여기는 친구 목록 자리</Text>
+        <View style={styles.container,{flex:2, marginBottom:15, alignItems:'center', justifyContent:'center'}}>
+          <FriendCarousel
+            gap={13}
+            offset={10}
+            pages={carouselData}
+            pageWidth={screenWidth - (10+13) * 2}
+          />
         </View>
 
         <View style={styles.container,{flex:4, backgroundColor:'white',borderTopStartRadius:50, borderTopEndRadius:50, paddingTop:25}}>
@@ -246,7 +276,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor:'white'
+    backgroundColor:'white',
   },
   modalView: {
     flex:0.2,

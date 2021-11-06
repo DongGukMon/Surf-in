@@ -1,23 +1,25 @@
-import React, {useState,useEffect} from 'react';
-import {FlatList, StyleSheet, Dimensions, Image,View,Text} from 'react-native';
-// import styled from 'styled-components/native';
+import React, {useState,useEffect,useContext} from 'react';
+import {FlatList, StyleSheet, Dimensions, Image,View,Text, ActivityIndicator} from 'react-native';
+import {getPreciseDistance} from 'geolib';
+import * as firebase from 'firebase';
+import firebaseInit from './firebaseInit';
+import {UserInfoContext} from './UserInfoContext';
 
-// import Page from './Page';
+firebaseInit();
 
+export default function FriendCarousel({pages, pageWidth, gap, offset}) {
 
-
-export default function Carousel({pages, pageWidth, gap, offset}) {
-
-  
-  const {width: screenWidth} = Dimensions.get('window');
-  const {height: screenHeight} = Dimensions.get('window');
+  const {userInfo} = useContext(UserInfoContext);
+  const {uid} = userInfo
 
   const [page, setPage] = useState(0);
+  const [myLocation,setMyLocation] = useState();
 
   function renderItem({item}) {
     return (
       <View style={{
-        width: pageWidth,  
+        width: pageWidth,
+        backgroundColor:'white',
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 20,
@@ -34,10 +36,13 @@ export default function Carousel({pages, pageWidth, gap, offset}) {
         }}>
       
       <Image
-        source={{uri:item.url}}
-        style={{width:"100%",height:"100%"}}
+        source={{uri:item.profile_picture}}
+        style={{width:"10%",height:"10%"}}
       />
-
+      {myLocation ?
+      <Text>Distance from: {getPreciseDistance({latitude:item.latitude,longitude:item.longitude},{latitude:myLocation.latitude,longitude:myLocation.longitude})}</Text>
+      : <ActivityIndicator/>
+      }
       </View>
     );
   }
@@ -49,6 +54,10 @@ export default function Carousel({pages, pageWidth, gap, offset}) {
     setPage(newPage);
   };
 
+  useEffect(()=>{
+    firebase.database().ref('location/'+uid).once('value',(snapshot)=>{
+    setMyLocation(snapshot.val())
+  }),[]})
 
   return (
         <FlatList

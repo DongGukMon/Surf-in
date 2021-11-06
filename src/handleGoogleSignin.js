@@ -8,8 +8,8 @@ const handleGoogleSignin = async () => {
   
     const config = {
       expoClientId:`61530148512-k3kf2goaklr8r1k18csko0uk295n4i19.apps.googleusercontent.com`,
-      iosClientId: `61530148512-vv55cqn7ga0gkkcn0dlfeuv535qofgui.apps.googleusercontent.com`,
-      androidClientId: `61530148512-h8b2lmf0iesre05g89cnpv58ofv26ur0.apps.googleusercontent.com`,
+      iosClientId: `391665152004-56do0e2b1n058707b7atdpa3uobhb20v.apps.googleusercontent.com`,
+      androidClientId: `391665152004-5ih8inrs23aa25q6ielo37o0h3aj3kn2.apps.googleusercontent.com`,
       scopes: ['profile', 'email'],
     };
 
@@ -37,3 +37,7 @@ const handleGoogleSignin = async () => {
   };
   
   export default handleGoogleSignin
+
+
+
+

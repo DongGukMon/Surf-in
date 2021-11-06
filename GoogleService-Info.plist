@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>391665152004-56do0e2b1n058707b7atdpa3uobhb20v.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.391665152004-56do0e2b1n058707b7atdpa3uobhb20v</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>391665152004-5ih8inrs23aa25q6ielo37o0h3aj3kn2.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBUWdJeYDplnbwRSnkGZMZcj9LzbGAWZyw</string>
+	<key>GCM_SENDER_ID</key>
+	<string>391665152004</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>host.exp.exponent</string>
+	<key>PROJECT_ID</key>
+	<string>zolzac-60337</string>
+	<key>STORAGE_BUCKET</key>
+	<string>zolzac-60337.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:391665152004:ios:b9c3ebbfb61b032e544551</string>
+	<key>DATABASE_URL</key>
+	<string>https://zolzac-60337-default-rtdb.firebaseio.com</string>
+</dict>
+</plist>

@@ -82,7 +82,7 @@ function HomeScreen() {
         setErrorMsg('Permission to access location was denied');
         return;
       }
-
+     
     
     const positionTracking = await Location.watchPositionAsync({accuracy: Location.Accuracy.High, timeInterval: 3000, distanceInterval: 1},(location)=>{
       firebase
