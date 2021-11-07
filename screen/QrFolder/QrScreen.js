@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
-import { Button, Text, View, Modal, Alert, StyleSheet, TouchableHighlight, TextInput, SafeAreaView, Dimensions} from 'react-native';
+import { Button, Text, View, Modal, Alert, StyleSheet, TouchableHighlight, TextInput, SafeAreaView, Dimensions,Image, ActivityIndicator} from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
 import * as firebase from 'firebase';
 import firebaseInit from '../../src/firebaseInit';
@@ -8,8 +8,7 @@ import { useToast } from "react-native-toast-notifications";
 import {qrContext} from '../../navigators/StackContext';
 import {addPoint} from '../../src/firebaseCall';
 import SwipeUpDown from 'react-native-swipe-up-down';
-import FriendCarousel from "../../src/FriendCarousel"
-
+import FriendCarousel from "../../src/FriendCarousel";
 
 firebaseInit();
 
@@ -30,6 +29,36 @@ function QrScreen({ navigation }) {
   var tempData = "";
 
   const {width: screenWidth} = Dimensions.get('window');
+
+  function miniItem(){
+    return(
+      <View style={{flexDirection:'row', justifyContent:'center'}}>
+
+        <Image
+        style={{bottom:10}}
+          source={require('../../img/up-arrow.png')}
+        />
+
+        <Text style={{textAlign:'center',fontWeight:'bold',color:'#333FC8',bottom:5}}>Camera</Text>
+
+        <Image
+        style={{bottom:10}}
+          source={require('../../img/up-arrow.png')}
+        />
+       </View>
+    )
+  }
+
+  function fullItem(){
+    return(
+      <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
+        <Image
+          style={{marginBottom:200}}
+          source={require('../../img/diaphragm.png')}
+        />
+      </View>
+    )
+  }
 
   function throwToast(massage){
     toast.show(massage,{
@@ -54,28 +83,41 @@ function QrScreen({ navigation }) {
     throwToast("거래 완료!");
   }
 
-  console.log(carouselData)
-
-  useEffect(() =>{
-    firebase.database().ref('friends/' + uid).once('value', (snapshot)=>{
+  useEffect(()=>{
+    firebase.database().ref('friends/' + uid).on('value', (snapshot)=>{
+      if(snapshot.val()){
+      const tempArr=[]
+      
       Object.values(snapshot.val()).map((item,index)=>{
         firebase.database().ref('location/'+item).once('value',(location)=>{
           firebase.database().ref('users/'+item).once('value',(users)=>{
-            const tempArr = carouselData.slice()
-            console.log(tempArr)
-            if(Object.values(snapshot.val()).length >tempArr){
+
+            if(Object.values(snapshot.val()).length >tempArr.length){
+              
               tempArr.push({
-              ...location.val(),
-              ...users.val(),
-              "num":index
-            })
-            setCarouselData(tempArr);
-          }
+                ...location.val(),
+                ...users.val(),
+                "num":index
+              })
+              if(Object.values(snapshot.val()).length == tempArr.length){
+                console.log(tempArr)
+                setCarouselData(tempArr)
+              }
+        }
           })
         })
       })
-    })
 
+    } else{
+      setCarouselData(["아싸"])
+    }
+    })
+  return() => {
+    firebase.database().ref('friends/' + uid).off()
+  }
+  },[])
+
+  useEffect(() =>{
 
     firebase.database().ref('point/' + uid + '/pointLog')
     .on('value', (snapshot) => {
@@ -117,32 +159,34 @@ function QrScreen({ navigation }) {
 
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor:'midnightblue'}}>
+    <SafeAreaView style={{flex: 1, backgroundColor:'white'}}>
 
-        <View style={styles.container,{flex:2, marginBottom:15, alignItems:'center', justifyContent:'center'}}>
+        <View style={styles.container,{flex:2, marginBottom:15, marginTop:20,alignItems:'center', justifyContent:'center'}}>
+ 
+          {carouselData ?
           <FriendCarousel
             gap={13}
             offset={10}
             pages={carouselData}
             pageWidth={screenWidth - (10+13) * 2}
-          />
+          />:<ActivityIndicator/>}
         </View>
 
-        <View style={styles.container,{flex:4, backgroundColor:'white',borderTopStartRadius:50, borderTopEndRadius:50, paddingTop:25}}>
-          <View style={{flex:0.5, alignItems:'center', justifyContent:'center', paddingTop:15, paddingBottom:5}}>    
+        <View style={styles.container,{flex:3.8, backgroundColor:'#99B7E9',borderTopStartRadius:25, borderTopEndRadius:25, paddingTop:10}}>
+          <View style={{flex:0.5, alignItems:'center', justifyContent:'center', paddingTop:5, paddingBottom:5}}>    
             {(isTrade) ?
-            <Text style={{fontSize:30}}>Trade</Text> : <Text style={{fontSize:30}}>Get Friends</Text>
+            <Text style={{fontSize:27,fontWeight:'bold',color:'white'}}>Trade</Text> : <Text style={{fontSize:27,fontWeight:'bold',color:'white'}}>Get Friends</Text>
             }
           </View>
           
           <View style={{flex:2, alignItems:'center', justifyContent:'center', marginTop:10,marginBottom:10}}>  
             <Text>
               {(isTrade) ?
-              <QRCode value={uid+"&Trade"} size={screenWidth*0.5}/> : <QRCode value={uid+"&Friend"} size={screenWidth*0.5}/>
+              <QRCode value={uid+"&Trade"} size={screenWidth*0.45}/> : <QRCode value={uid+"&Friend"} size={screenWidth*0.45}/>
               }
             </Text>
            </View>
-          <View style={{flex:1.5, alignItems:'center'}}> 
+          <View style={{flex:1.5, alignItems:'center',marginTop:20}}> 
             <TouchableHighlight
               style={{ ...styles.openButton,marginTop:10, marginBottom: 10, width:120 }}
               onPress={() => {setModalHandle({...modalHandle, isTrade:!isTrade});}}>
@@ -152,15 +196,15 @@ function QrScreen({ navigation }) {
         </View>
 
         <SwipeUpDown 
-         itemMini={<Text>Mini</Text>} // Pass props component when collapsed
-         itemFull={<Text>기다려봐요</Text>} // Pass props component when show full
+         itemMini={miniItem()}
+         itemFull={fullItem()}
          onShowFull={()=>{
           setModalHandle({...modalHandle, porintChangeListen:false});
           navigation.navigate("QrScan");
           swipeUpDownRef.showMini()}
         }
          disablePressToShow={true} // Press item mini to show full
-         style={{ backgroundColor: 'green', borderTopEndRadius: 30, borderTopStartRadius: 30, height:50}} // style for swipe
+         style={{ backgroundColor: 'white', borderTopEndRadius: 30, borderTopStartRadius: 30, height:50}} // style for swipe
          hasRef={ref => (setSwipeUpDownRef(ref))}
          swipeHeight={100}
          />
@@ -205,69 +249,7 @@ function QrScreen({ navigation }) {
         </Modal>
 
       </SafeAreaView>
-    
-  //   <View style = {styles.container}>
 
-  //     <Modal
-  //       transparent={true}
-  //       visible={modalVisibleQr}
-  //       onRequestClose={() => {
-  //         Alert.alert('Modal has been closed.');
-  //       }}>
-  //       <View style={styles.container}>
-  //         <View style={styles.modalView}>
-  //           <Text>
-  //             {(isTrade) ? 
-  //             <QRCode value={uid+"&Trade"} size={170}/> : <QRCode value={uid+"&Friend"} size={170}/>
-  //             };
-  //           </Text>
-            // <TouchableHighlight
-            //   style={{ ...styles.openButton, backgroundColor: '#2196F3', marginTop: 17, marginBottom: -10 }}
-            //   onPress={() => {setModalHandle({...modalHandle,modalVisibleQr:false, isTrade:false});}}>
-            //   <Text style={styles.textStyle}>닫기</Text>
-            // </TouchableHighlight>
-  //         </View>
-  //       </View>
-  //     </Modal>
-
-          // <Modal
-          //   transparent={true}
-          //   visible={modalVisibleTrade}
-          //   onRequestClose={() => {
-          //     Alert.alert('Modal has been closed.');
-          //   }}>
-          //     <View style={styles.container}>
-          //       <View style={styles.modalView}>
-          //         <TextInput placeholder="얼마줄거야" value={text} onChangeText={(text)=>{setModalHandle({...modalHandle, text:text})}}/>
-          //         <Button title ="제출" onPress={text>0 ? ()=>{
-          //           setModalHandle({...modalHandle,modalVisibleTrade:false,isTrade:false,text:"",friendUid:""});
-          //           actionTrade(friendUid,text)
-          //         }
-          //           : ()=>{alert("올바른 금액을 입력해주세요")}}/>
-          //         <TouchableHighlight
-          //           style={{ ...styles.openButton, backgroundColor: '#2196F3', marginTop: 17, marginBottom: -10 }}
-          //           onPress={() => {
-          //             setModalHandle({...modalHandle,modalVisibleTrade:false, text:""});
-          //           }}>
-          //           <Text style={styles.textStyle}>닫기</Text>
-          //         </TouchableHighlight>
-          //       </View>
-          //     </View>
-          // </Modal>
-
-  //       <View style={styles.container}>
-  //       <Button title="Get Friends" onPress={()=>{setModalHandle({...modalHandle, modalVisibleQr:true, isTrade:false, porintChangeListen:true})}}></Button>
-  //       <Button title="Trade Point" onPress={()=>{setModalHandle({...modalHandle, modalVisibleQr:true, isTrade:true, porintChangeListen:true })}}></Button>
-  //       <Button
-  //         title="Scan"
-  //         onPress={() => {
-            // setModalHandle({...modalHandle, porintChangeListen:false});
-            // navigation.navigate("QrScan");
-  //         }}
-  //       />
-  //       </View>
-  // </View>
-  
   );
 }
 
@@ -297,7 +279,7 @@ const styles = StyleSheet.create({
     marginBottom: 80
   },
   openButton: {
-    backgroundColor: '#F194FF',
+    backgroundColor: '#333FC8',
     borderRadius: 20,
     padding: 10,
     elevation: 2,

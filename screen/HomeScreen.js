@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Button, Text, View, Modal, ActivityIndicator, TouchableOpacity } from 'react-native';
+import { Button, Text, View, Modal, ActivityIndicator, TouchableOpacity,SafeAreaView,Dimensions } from 'react-native';
 import LottieView from 'lottie-react-native';
 import * as Location from 'expo-location';
 import firebase from 'firebase';
@@ -33,6 +33,7 @@ function HomeScreen() {
       
       Object.values(snapshot.val()).map((current)=>{
       
+
       var radiusLocation = isPointWithinRadius(
           { latitude: lati, longitude: longi },
           { latitude: current["latitude"], longitude: current["longitude"] },
@@ -117,13 +118,18 @@ function HomeScreen() {
           </View>
         </View>
       </Modal>
-
-      <TouchableOpacity style={{width:150, height: 150, justifyContent:'center', alignItems:"center", borderRadius: 300}} onPress={()=>{alertLocation();}}>
-  
       
-      <LottieView source={require('../assets/animation/66818-holographic-radar.json')} autoPlay loop style={{width:500}} />
-      {/* <Button title="Location" onPress={()=>{alertLocation();}}/>    */}
-      </TouchableOpacity> 
+
+        <View style={{position:'absolute', bottom:Dimensions.get('screen').height*0.65}}>
+          <Text style={{fontSize:21, textAlign:'center', fontWeight:'bold', color:'#303BA5'}}>주변에 있는 사람들에게</Text>
+          <Text style={{fontSize:21, textAlign:'center', fontWeight:'bold', color:'#303BA5'}}>당신을 알려보세요</Text>
+        </View>
+        
+        <TouchableOpacity style={{width:230,height:230,borderRadius:300, overflow:'hidden', top:30}} onPress={()=>{alertLocation();}}>
+          <LottieView source={require('../assets/animation/66818-holographic-radar.json')} autoPlay loop style={{width:500, position:'relative', right:45, bottom:45}} />
+        </TouchableOpacity>
+
+
     </View>
   );
 }

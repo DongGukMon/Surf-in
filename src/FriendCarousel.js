@@ -1,9 +1,10 @@
 import React, {useState,useEffect,useContext} from 'react';
-import {FlatList, StyleSheet, Dimensions, Image,View,Text, ActivityIndicator} from 'react-native';
+import {FlatList, StyleSheet, Dimensions, Image,View,Text, ActivityIndicator,Button} from 'react-native';
 import {getPreciseDistance} from 'geolib';
 import * as firebase from 'firebase';
 import firebaseInit from './firebaseInit';
 import {UserInfoContext} from './UserInfoContext';
+import {pushMyFriends} from "./notification";
 
 firebaseInit();
 
@@ -17,34 +18,20 @@ export default function FriendCarousel({pages, pageWidth, gap, offset}) {
 
   function renderItem({item}) {
     return (
-      <View style={{
-        width: pageWidth,
-        backgroundColor:'white',
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 20,
-        overflow:'hidden',
-        marginHorizontal: gap / 2,
-        shadowColor: "#000",
-        shadowOffset: {
-          width: 2,
-          height: 3,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5,
-        }}>
+      <View style={{...styles.itemStyle,width:pageWidth,marginHorizontal: gap / 2,}}>
       
       <Image
         source={{uri:item.profile_picture}}
-        style={{width:"10%",height:"10%"}}
+        style={{width:"20%",height:"20%"}}
       />
       {myLocation ?
       <Text>Distance from: {getPreciseDistance({latitude:item.latitude,longitude:item.longitude},{latitude:myLocation.latitude,longitude:myLocation.longitude})}</Text>
       : <ActivityIndicator/>
       }
+
+      <Button title="PUSH" color="blue" onPress={()=>{pushMyFriends(item)}}/>
       </View>
-    );
+    )
   }
 
   const onScroll = (e) => {
@@ -57,11 +44,11 @@ export default function FriendCarousel({pages, pageWidth, gap, offset}) {
   useEffect(()=>{
     firebase.database().ref('location/'+uid).once('value',(snapshot)=>{
     setMyLocation(snapshot.val())
-  }),[]})
+  })},[])
 
   return (
         <FlatList
-          style={{flex:1}}
+          style={{flex:1, position:'absoulte'}}
           automaticallyAdjustContentInsets={false}
           contentContainerStyle={{
             paddingHorizontal: offset + gap / 2,
@@ -82,21 +69,20 @@ export default function FriendCarousel({pages, pageWidth, gap, offset}) {
 
 
 const styles = StyleSheet.create({
-  container: {
-    flex:1,
-    justifyContent:'center',
-    // alignItems:'center'
+  itemStyle: {
+    borderWidth:5,
+    borderColor:'blue',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 20,
+    overflow:'hidden',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 2,
+      height: 3,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
-  Indicator:{
-    width:6,
-    height:6,
-    backgroundColor:'green',
-    borderRadius:3
-  },
-  IndicatorWrapper: {
-    flexDirection:'row',
-    alignItems:'center',
-    marginTop:16,
-    backgroundColor:'red'
-  }
 })

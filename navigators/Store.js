@@ -8,7 +8,7 @@ const Stack = createStackNavigator();
 function Qr() {
   return (
     <Stack.Navigator>
-        <Stack.Screen name="StoreScreen" component={StoreScreen} options={{headerShown: false}} />
+        <Stack.Screen name="StoreScreen" component={StoreScreen} options={{headerShown: true}} />
         <Stack.Screen name="PointScreen" component={PointScreen}/>
     </Stack.Navigator>
   );

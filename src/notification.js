@@ -8,7 +8,7 @@ firebaseInit()
 
 export default async function notification(result) {
     var expoToken = "";
-    
+
     if (Constants.isDevice) {
         const { status: existingStatus } = await Notifications.getPermissionsAsync();
         let finalStatus = existingStatus;
@@ -22,6 +22,7 @@ export default async function notification(result) {
         }
         const token = (await Notifications.getExpoPushTokenAsync()).data;
         expoToken = token;
+
     } else {
         alert('Must use physical device for Push Notifications');
     }
@@ -32,8 +33,6 @@ export default async function notification(result) {
     .set({
         expoToken
     });
-    console.log(expoToken);
-    console.log(result.user.uid);
     
     if (Platform.OS === 'android') {
         Notifications.setNotificationChannelAsync('default', {
@@ -53,10 +52,12 @@ export async function pushNearFriends(nearFirends) {
     const toPush =[] 
     firebase.database().ref('pushToken').once('value',async(snapshot)=>{
         nearFirends.map((current)=>{
+
             toPush.push(snapshot.val()[current["uid"]]["expoToken"])
         })
 
-        console.log(toPush)
+  
+
         await fetch('https://exp.host/--/api/v2/push/send', {
             method: 'POST',
             headers: {
@@ -69,6 +70,33 @@ export async function pushNearFriends(nearFirends) {
               sound: 'default',
               title: "반가워요",
               body: "주변에 있으시군요!",
+              }),
+            },
+        )
+    })
+
+}
+
+export async function pushMyFriends(firend) {
+   
+    firebase.database().ref('pushToken/'+firend.uid).once('value',async(snapshot)=>{
+
+        const toPush = snapshot.val()["expoToken"]
+
+  
+
+        await fetch('https://exp.host/--/api/v2/push/send', {
+            method: 'POST',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+            //   Authorization: key=`AAAAWzEP8AQ:APA91bFkAehXNlIstOSFEUE44ObvNmp0Ki5PWp4Fik2Mtf181rnsURDCdFCO1JSvMNfMbDOSvabCow1MkwRmJ0kZZETRBSZGTrwwEps_EHW4uvHaLLK2SITFi11U7cvuf86td2IEQeRV`,
+            },
+            body: JSON.stringify({
+              to: toPush,
+              sound: 'default',
+              title: "반갑다 친구야",
+              body: "나야나 오늘밤 주인공은 나야나",
               }),
             },
         )

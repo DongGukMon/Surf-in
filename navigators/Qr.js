@@ -21,7 +21,7 @@ function Qr() {
   return (
     <qrContext.Provider value={{modalHandle,setModalHandle}}>
     <Stack.Navigator>
-        <Stack.Screen name="QrScreen" component={QrScreen} options={{headerShown: false}}/>
+        <Stack.Screen name="QrScreen" component={QrScreen} options={{headerShown: true}}/>
         <Stack.Screen name="QrScan" component={QrScan} options= {{headerTransparent: true, title: '',headerBackTitleVisible:false}}/>
     </Stack.Navigator>
     </qrContext.Provider>

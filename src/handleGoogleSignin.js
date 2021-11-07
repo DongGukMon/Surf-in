@@ -5,6 +5,7 @@ import {firstSignUp,alreadySignup} from './firebaseCall';
 import notification from './notification';
 
 const handleGoogleSignin = async () => {
+
   
     const config = {
       expoClientId:`61530148512-k3kf2goaklr8r1k18csko0uk295n4i19.apps.googleusercontent.com`,
@@ -23,6 +24,7 @@ const handleGoogleSignin = async () => {
         }
         firebase.auth().signInWithCredential(credential).then((result)=>{
           notification(result);
+
           if (result.additionalUserInfo.isNewUser) {
             firstSignUp(result)
           } else {
