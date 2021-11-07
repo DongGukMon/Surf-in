@@ -100,7 +100,6 @@ function QrScreen({ navigation }) {
                 "num":index
               })
               if(Object.values(snapshot.val()).length == tempArr.length){
-                console.log(tempArr)
                 setCarouselData(tempArr)
               }
         }
