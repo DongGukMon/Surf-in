@@ -92,10 +92,15 @@ export function dateFormate(untill) {
   var date = new Date(untill)
   var mm = date.getMonth() + 1; // getMonth() is zero-based
   var dd = date.getDate();
+  var hour = date.getHours();
+  var minute = date.getMinutes();
 
   var fullDate= [date.getFullYear(),
               (mm>9 ? '' : '0') + mm,
               (dd>9 ? '' : '0') + dd
-            ].join(' / ');
+            ].join(' / ') + 
+            '  ' + 
+            [(hour>9 ? '':'0') + hour,
+          (minute>9 ? '':'0') + minute].join(' : ');
   return fullDate
 }

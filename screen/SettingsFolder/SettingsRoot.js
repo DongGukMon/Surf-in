@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {StyleSheet, Text, View, Dimensions, TouchableOpacity,SafeAreaView, Button } from "react-native";
+import {StyleSheet, Text, View, Dimensions, TouchableOpacity,SafeAreaView, Button} from "react-native";
 
 
 
@@ -14,27 +14,27 @@ function SettingsScreen({ navigation }) {
         <View style ={styles.container,{flex:1.2, borderRadius:15, flexDirection:'row', paddingTop:30,paddingLeft:10,paddingRight:10}}>
           
           <TouchableOpacity style={styles.box} onPress={()=>navigation.navigate("Acount")}>
-            <Button style={{flex:1,}} title="Acount" color='green' onPress={()=>navigation.navigate("Acount")}/>
+            <Text style={styles.menuTitle}>Acount</Text>
           </TouchableOpacity>
           
-          <TouchableOpacity style={styles.box} onPress={()=>alert("hi")}>
-          <Button style={{flex:1,}} title="Master" color='green' onPress={()=>alert("hi")}/>
+          <TouchableOpacity style={styles.box} onPress={()=>navigation.navigate("Master")}>
+          <Text style={styles.menuTitle}>Master</Text>
           </TouchableOpacity>
 
         </View>
 
         <View style ={styles.container,{flex:2, borderRadius:15, paddingTop:20, paddingBottom:50}}>
 
-          <TouchableOpacity style={styles.list} onPress={()=>navigation.navigate("Alam")}>
-            <Button style={{flex:1,}} title="알람" color='tomato' onPress={()=>navigation.navigate("Alam")}/>
+          <TouchableOpacity style={styles.list} onPress={()=>alert("알림설정은 못해")}>
+            <Text style={{...styles.menuTitle, color:'tomato'}}>알람</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.list} onPress={()=>navigation.navigate("Rules")}>
-            <Button style={{flex:1,}} title="행동수칙" color='tomato' onPress={()=>navigation.navigate("Rules")}/>
+            <Text style={{...styles.menuTitle, color:'tomato'}}>행동수칙</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.list} onPress={()=>navigation.navigate("PersonalInfo")}>
-            <Button style={{flex:1,}} title="개인정보처리방침" color='tomato' onPress={()=>navigation.navigate("PersonalInfo")}/>
+            <Text style={{...styles.menuTitle, color:'tomato'}}>개인정보처리방침</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -68,6 +68,7 @@ const styles = StyleSheet.create({
   },
   list:{
     flex:1,
+    justifyContent:'center',
     margin:10,
     marginHorizontal:17,
     borderRadius:15,
@@ -81,18 +82,13 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
+  },
+  menuTitle:{
+    textAlign:'center', 
+    color:'green',
+    fontSize:18,
   }
 })
-//   return (
-//     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center',backgroundColor:'white' }}>
-//         <Text style={styles.list} onPress={()=>navigation.navigate("Acount")}>계정</Text>
-//         <Text style={styles.list} onPress={()=>navigation.navigate("Alam")}>알림설정</Text>
-//         <Text style={styles.list} onPress={()=>navigation.navigate("Rules")}>행동수칙</Text>
-//         <Text style={styles.list} onPress={()=>navigation.navigate("PersonalInfo")}>개인정보처리방침</Text>
-        
-//     </View>
-//   );
-// }
 
 
 export default SettingsScreen;

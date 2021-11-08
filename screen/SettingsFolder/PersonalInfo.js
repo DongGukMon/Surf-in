@@ -6,36 +6,10 @@ function PersonalInfo({navigation}) {
 
   const {width: screenWidth} = Dimensions.get('window');
 
-  const PAGES = [
-    {
-      num: 1,
-      color: '#86E3CE',
-    },
-    {
-      num: 2,
-      color: '#D0E6A5',
-    },
-    {
-      num: 3,
-      color: '#FFDD94',
-    },
-    {
-      num: 4,
-      color: '#FA897B',
-    },
-    {
-      num: 5,
-      color: '#CCABD8',
-    },
-  ];
-
   return(
-    <Carousel
-    gap={16}
-    offset={16}
-    pages={PAGES}
-    pageWidth={screenWidth - (16 + 16) * 2}
-  />
+    <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
+      <Text onPress={()=>alert("하지만 아무것도 없지. 관련 내용 서치를 아직 안했거든.")}>여기는 개인정보처리방침</Text>
+    </View>
   )
 }
 

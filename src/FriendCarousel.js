@@ -24,6 +24,11 @@ export default function FriendCarousel({pages, pageWidth, gap, offset}) {
         source={{uri:item.profile_picture}}
         style={{width:"20%",height:"20%"}}
       />
+      
+      <Text>
+        name: {item.name}
+      </Text>
+
       {myLocation ?
       <Text>Distance from: {getPreciseDistance({latitude:item.latitude,longitude:item.longitude},{latitude:myLocation.latitude,longitude:myLocation.longitude})}</Text>
       : <ActivityIndicator/>

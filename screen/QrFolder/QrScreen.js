@@ -161,7 +161,6 @@ function QrScreen({ navigation }) {
     <SafeAreaView style={{flex: 1, backgroundColor:'white'}}>
 
         <View style={styles.container,{flex:2, marginBottom:15, marginTop:20,alignItems:'center', justifyContent:'center'}}>
- 
           {carouselData ?
           <FriendCarousel
             gap={13}
@@ -172,19 +171,23 @@ function QrScreen({ navigation }) {
         </View>
 
         <View style={styles.container,{flex:3.8, backgroundColor:'#99B7E9',borderTopStartRadius:25, borderTopEndRadius:25, paddingTop:10}}>
-          <View style={{flex:0.5, alignItems:'center', justifyContent:'center', paddingTop:5, paddingBottom:5}}>    
+
+          <View style={{flex:0.5, alignItems:'center', justifyContent:'center', paddingTop:5, paddingBottom:5, backfaceVisibility:'tomato'}}>    
             {(isTrade) ?
             <Text style={{fontSize:27,fontWeight:'bold',color:'white'}}>Trade</Text> : <Text style={{fontSize:27,fontWeight:'bold',color:'white'}}>Get Friends</Text>
             }
           </View>
           
-          <View style={{flex:2, alignItems:'center', justifyContent:'center', marginTop:10,marginBottom:10}}>  
-            <Text>
-              {(isTrade) ?
-              <QRCode value={uid+"&Trade"} size={screenWidth*0.45}/> : <QRCode value={uid+"&Friend"} size={screenWidth*0.45}/>
-              }
-            </Text>
+          <View style={{flex:2, alignItems:'center', justifyContent:'center', marginTop:15, marginBottom:10}}>  
+            <View style={{...styles.qrStyle, width:screenWidth*0.47, height:screenWidth*0.47, justifyContent:'center', alignItems:'center'}}>
+              <Text>
+                {(isTrade) ?
+                <QRCode value={uid+"&Trade"} size={screenWidth*0.45}/> : <QRCode value={uid+"&Friend"} size={screenWidth*0.45}/>
+                }
+              </Text>
+            </View>
            </View>
+
           <View style={{flex:1.5, alignItems:'center',marginTop:20}}> 
             <TouchableHighlight
               style={{ ...styles.openButton,marginTop:10, marginBottom: 10, width:120 }}
@@ -192,6 +195,7 @@ function QrScreen({ navigation }) {
               <Text style={styles.textStyle}>{isTrade ? '친구추가' : '포인트거래'}</Text>
             </TouchableHighlight>
           </View>
+
         </View>
 
         <SwipeUpDown 
@@ -205,7 +209,7 @@ function QrScreen({ navigation }) {
          disablePressToShow={true} // Press item mini to show full
          style={{ backgroundColor: 'white', borderTopEndRadius: 30, borderTopStartRadius: 30, height:50}} // style for swipe
          hasRef={ref => (setSwipeUpDownRef(ref))}
-         swipeHeight={100}
+         swipeHeight={160}
          />
 
         <Modal
@@ -292,6 +296,16 @@ const styles = StyleSheet.create({
   modalText: {
     marginBottom: 15,
     textAlign: 'center',
+  },
+  qrStyle:{
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   }
 });
 

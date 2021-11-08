@@ -19,7 +19,7 @@ function Order() {
     <orderContext.Provider value={{orderData,setOrderData}}>
     <Stack.Navigator>
         <Stack.Screen name="OrderList" component={OrderList} options={{headerShown: true}}/>
-        <Stack.Screen name="OrderScreen" component={OrderScreen} options= {{headerTransparent: false, title:orderData.selectData.title, headerBackTitleVisible:false}}/>
+        <Stack.Screen name="OrderScreen" component={OrderScreen} options= {{headerTransparent: false, title:'Order Details', headerBackTitleVisible:false}}/>
     </Stack.Navigator>
     </orderContext.Provider>
   );

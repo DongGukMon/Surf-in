@@ -4,7 +4,6 @@ import firebaseInit from '../../src/firebaseInit';
 import firebase from 'firebase';
 import {UserInfoContext} from '../../src/UserInfoContext';
 
-
 firebaseInit()
 
 
