@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "naviProject",
+    "name": "서핀",
     "slug": "naviProject",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -18,7 +18,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "host.exp.exponent",
+      "bundleIdentifier": "com.zolzac.surfin",
       "googleServicesFile": "./GoogleService-Info.plist",
       "config": {
         "googleSignIn": {
@@ -27,11 +27,16 @@
     },
     "android": {
       "googleServicesFile": "./google-services.json",
-      "package": "host.exp.exponent",
+      "package": "com.zolzac.surfin",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "config": {
+        "googleSignIn": {
+          "apiKey": "391665152004-5ih8inrs23aa25q6ielo37o0h3aj3kn2.apps.googleusercontent.com",
+          "certificateHash": "BC89F3A5E8850711E6E84BF89413C3B91211248F"
+        }}
     },
     "web": {
       "favicon": "./assets/favicon.png"

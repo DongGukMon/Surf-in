@@ -1,19 +1,28 @@
 import firebase from "firebase";
+import {
+  API_KEY,
+  AUTH_DOMAIN,
+  PROJECT_ID,
+  STORAGE__BUCKET,
+  MESSAGING_SENDER_ID,
+  APP_ID,
+  MEASUERMENT_ID,
+} from "./constants";
 
 const firebaseInit = () => {
-var firebaseConfig = {
-    apiKey: "AIzaSyDiKbD5nKPzLNKQ2i8zHKHR6VHn1AYjlis",
-    authDomain: "zolzac-60337.firebaseapp.com",
-    projectId: "zolzac-60337",
-    storageBucket: "zolzac-60337.appspot.com",
-    messagingSenderId: "391665152004",
-    appId: "1:391665152004:web:0ef3da2ae6338085544551",
-    measurementId: "G-L639YSSKJT"
+  var firebaseConfig = {
+    apiKey: API_KEY,
+    authDomain: AUTH_DOMAIN,
+    projectId: PROJECT_ID,
+    storageBucket: STORAGE__BUCKET,
+    messagingSenderId: MESSAGING_SENDER_ID,
+    appId: APP_ID,
+    measurementId: MEASUERMENT_ID,
   };
   // Initialize Firebase
-  if(firebase.apps.length==0){
+  if (firebase.apps.length == 0) {
     firebase.initializeApp(firebaseConfig);
   }
-}
+};
 
-  export default firebaseInit;
+export default firebaseInit;

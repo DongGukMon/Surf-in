@@ -16,6 +16,10 @@ export default function FriendCarousel({pages, pageWidth, gap, offset}) {
   const [page, setPage] = useState(0);
   const [myLocation,setMyLocation] = useState();
 
+  function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
   function renderItem({item}) {
     return (
       <View style={{...styles.itemStyle,width:pageWidth,marginHorizontal: gap / 2,}}>
@@ -30,7 +34,7 @@ export default function FriendCarousel({pages, pageWidth, gap, offset}) {
       </Text>
 
       {myLocation ?
-      <Text>Distance from: {getPreciseDistance({latitude:item.latitude,longitude:item.longitude},{latitude:myLocation.latitude,longitude:myLocation.longitude})}</Text>
+      <Text>Distance from: {numberWithCommas(getPreciseDistance({latitude:item.latitude,longitude:item.longitude},{latitude:myLocation.latitude,longitude:myLocation.longitude}))}m</Text>
       : <ActivityIndicator/>
       }
 
@@ -53,7 +57,7 @@ export default function FriendCarousel({pages, pageWidth, gap, offset}) {
 
   return (
         <FlatList
-          style={{flex:1, position:'absoulte'}}
+          style={{flex:1}}
           automaticallyAdjustContentInsets={false}
           contentContainerStyle={{
             paddingHorizontal: offset + gap / 2,

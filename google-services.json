@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:391665152004:android:1a48faf14364d082544551",
         "android_client_info": {
-          "package_name": "host.exp.Exponent"
+          "package_name": "com.zolzac.surfin"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "391665152004-5ih8inrs23aa25q6ielo37o0h3aj3kn2.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "host.exp.Exponent",
+            "package_name": "com.zolzac.surfin",
             "certificate_hash": "18c27aa8bd11cabc8ad5d4b9ff77a79ceae16ef8"
           }
         }

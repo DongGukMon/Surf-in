@@ -3,6 +3,7 @@ import React, {useState} from 'react';
 import * as Notifications from 'expo-notifications';
 import firebase from 'firebase';
 import firebaseInit from './firebaseInit';
+import {getPreciseDistance} from 'geolib';
 
 firebaseInit()
 
@@ -57,7 +58,6 @@ export async function pushNearFriends(nearFirends) {
         })
 
   
-
         await fetch('https://exp.host/--/api/v2/push/send', {
             method: 'POST',
             headers: {

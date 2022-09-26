@@ -36,6 +36,13 @@ export default function QrScan({navigation}) {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
       setHasPermission(status === 'granted');
     })();
+
+    
+    fetch("https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=901")
+      .then(res=>res.json())
+      .then(responseJSON=>console.log(responseJSON))
+    
+
   }, []);
 
   const handleBarCodeScanned = (data) => {
