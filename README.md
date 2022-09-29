@@ -5,6 +5,7 @@ Surf-in(이하 서핀)은 가치 기반 커뮤니티 플랫폼 서비스이며, 
 ### front-end
 - expo CLI
 - javascript
+- context API
 - FCM
 ### back-end
 - firebase realtime database
