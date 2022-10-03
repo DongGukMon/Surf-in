@@ -2,12 +2,10 @@
 Surf-in(이하 서핀)은 가치 기반 커뮤니티 플랫폼 서비스이며, 강원대학교 영상문화학과 졸업작품으로써 기획서 및 화면설계서와 더불어 제작되었습니다. 서핀의 목적은 불특정 다수 유저들이 하나의 가치를 중심으로 모여 소속감을 느끼고, 그 집단 자체로 하나의 브랜드가 될 수 있는지에 대한 프로젝트에 기반합니다.
 
 ## 기술 스택
-### front-end
 - expo CLI
 - javascript
 - context API
 - FCM
-### back-end
 - firebase realtime database
 
 ## 구현 범위
